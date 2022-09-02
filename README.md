@@ -36,7 +36,7 @@ https://dadosabertos.camara.leg.br/ API wrapper
 ```js
 DadosAbertos.blocos({ id: [1], idLegislatura: [1] })
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 ##### blocosById(id): Informações sobre um bloco partidário específico
@@ -48,7 +48,7 @@ DadosAbertos.blocos({ id: [1], idLegislatura: [1] })
 ```js
 DadosAbertos.blocosById(1)
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### deputados({ id, nome, idLegislatura, siglaUf, siglaPartido, siglaSexo, dataInicio, dataFim, pagina, itens, ordem, ordenarPor }): Listagem e busca de deputados, segundo critérios
@@ -66,12 +66,12 @@ DadosAbertos.blocosById(1)
 | pagina        | Int           | Número da página de resultados. Default = 1                                                                 | false    |
 | itens         | Int           | Número máximo de itens na página que se deseja obter com esta requisição. Default = 10                      | false    |
 | ordem         | String        | O sentido da ordenação: asc para A a Z ou 0 a 9, e desc para Z a A ou 9 a 0. Default = ASC                  | false    |
-| ordenarPor    | String        | Nome do campo pelo qual a lista será ordenada: idLegislatura, id ou nome. Default = id                      | false    |
+| ordenarPor    | String        | Nome do campo pelo qual a lista será ordenada: idLegislatura, id ou nome. Default = ID                      | false    |
 
 ```js
 DadosAbertos.deputados({ nome: "maria" })
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### deputadosById(id): Informações detalhadas sobre um deputado específico
@@ -83,7 +83,7 @@ DadosAbertos.deputados({ nome: "maria" })
 ```js
 DadosAbertos.deputadosById(1)
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### deputadoDespesas({ id, idLegislatura, anos, meses, cnpjCpfFornecedor, pagina, itens, ordem, ordenarPor }): As despesas com exercício parlamentar do deputado
@@ -103,7 +103,7 @@ DadosAbertos.deputadosById(1)
 ```js
 DadosAbertos.deputadoDespesas({ id: 1 })
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### deputadoDiscursos({ id, idLegislatura, dataInicio, dataFim, pagina, itens, ordem, ordenarPor }): Os discursos feitos por um deputado em eventos diversos
@@ -122,7 +122,7 @@ DadosAbertos.deputadoDespesas({ id: 1 })
 ```js
 DadosAbertos.deputadoDiscursos({ id: 1 })
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### deputadoEventos({ id, dataInicio, dataFim, pagina, itens, ordem, ordenarPor }): Uma lista de eventos com a participação do parlamentar
@@ -140,7 +140,7 @@ DadosAbertos.deputadoDiscursos({ id: 1 })
 ```js
 DadosAbertos.deputadoEventos({ id: 1 })
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### deputadoFrentes(id): As frentes parlamentares das quais um deputado é integrante
@@ -152,7 +152,7 @@ DadosAbertos.deputadoEventos({ id: 1 })
 ```js
 DadosAbertos.deputadoFrentes(1)
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### deputadoOcupacoes(id): Os empregos e atividades que o(a) deputado(a) já teve
@@ -164,7 +164,7 @@ DadosAbertos.deputadoFrentes(1)
 ```js
 DadosAbertos.deputadoOcupacoes(1)
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### deputadoOrgaos({ id, dataInicio, dataFim, pagina, itens, ordem, ordenarPor }): Os órgãos dos quais um deputado é integrante
@@ -182,7 +182,7 @@ DadosAbertos.deputadoOcupacoes(1)
 ```js
 DadosAbertos.deputadoOrgaos({ id: 1 })
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### deputadoProfissoes(id): As profissões que o parlamentar declarou à Câmara que já exerceu ou que pode exercer pela sua formação e/ou experiência
@@ -194,21 +194,7 @@ DadosAbertos.deputadoOrgaos({ id: 1 })
 ```js
 DadosAbertos.deputadoProfissoes(1)
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
-```
-
-#### legislaturasMesa({ id, dataInicio, dataFim }): Quais deputados fizeram parte da Mesa Diretora em uma legislatura
-
-| Argument   | Type   | Value                                                                                                      | Required |
-| ---------- | ------ | ---------------------------------------------------------------------------------------------------------- | -------- |
-| id         | Int    | Número da legislatura da qual se deseja os dados.                                                          | true     |
-| dataInicio | String | Dia de início do intervalo de tempo do qual se deseja saber a composição da Mesa, no formato AAAA-MM-DD.   | false    |
-| dataFim    | String | Data de término do intervalo de tempo do qual se deseja saber a composição da Mesa, no formato AAAA-MM-DD. | false    |
-
-```js
-DadosAbertos.legislaturasMesa({ id: 1 })
-  .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### refDeputadosCodSituacao(): As possíveis situações de exercício parlamentar de um deputado
@@ -219,7 +205,7 @@ DadosAbertos.legislaturasMesa({ id: 1 })
 ```js
 DadosAbertos.refDeputadosCodSituacao()
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### refDeputadosSituacao(): As possíveis situações de exercício parlamentar de um deputado
@@ -230,7 +216,7 @@ DadosAbertos.refDeputadosCodSituacao()
 ```js
 DadosAbertos.refDeputadosSituacao()
   .then((data) => console.log(data))
-  .catch(err) => console.log(err.response.data);
+  .catch(err) => console.log(err);
 ```
 
 #### Eventos():
@@ -241,9 +227,49 @@ DadosAbertos.refDeputadosSituacao()
 
 > coming soon
 
-#### Legislaturas():
+#### legislaturas({ id, data, pagina, itens, ordem, ordenarPor }): Os períodos de mandatos e atividades parlamentares da Câmara
 
-> coming soon
+| Argument   | Type   | Value                                                                                                      | Required |
+| ---------- | ------ | ---------------------------------------------------------------------------------------------------------- | -------- |
+| id         | Int    | Número da legislatura da qual se deseja os dados.                                                          | false    |
+| data       | String | Data no formato AAAA-MM-DD,                                                                                | false    |
+| dataFim    | String | Data de término do intervalo de tempo do qual se deseja saber a composição da Mesa, no formato AAAA-MM-DD. | false    |
+| pagina     | Int    | Número da página de resultados. Default = 1                                                                | false    |
+| itens      | Int    | Número máximo de itens na página que se deseja obter com esta requisição. Default = 10                     | false    |
+| ordem      | String | O sentido da ordenação: asc para A a Z ou 0 a 9, e desc para Z a A ou 9 a 0. Default = DESC                | false    |
+| ordenarPor | String | Nome do campo pelo qual a lista será ordenada: idLegislatura, id ou nome. Default = id                     | false    |
+
+```js
+DadosAbertos.legislaturas({ data: "2018-01-01" })
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err);
+```
+
+#### legislaturasById(id): Informações extras sobre uma determinada legislatura da Câmara
+
+| Argument | Type | Value                                             | Required |
+| -------- | ---- | ------------------------------------------------- | -------- |
+| id       | Int  | Número da legislatura da qual se deseja os dados. | true     |
+
+```js
+DadosAbertos.legislaturasById(1)
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err);
+```
+
+#### legislaturaMesa({ id, dataInicio, dataFim }): Quais deputados fizeram parte da Mesa Diretora em uma legislatura
+
+| Argument   | Type   | Value                                                                                                      | Required |
+| ---------- | ------ | ---------------------------------------------------------------------------------------------------------- | -------- |
+| id         | Int    | Número da legislatura da qual se deseja os dados.                                                          | true     |
+| dataInicio | String | Dia de início do intervalo de tempo do qual se deseja saber a composição da Mesa, no formato AAAA-MM-DD.   | false    |
+| dataFim    | String | Data de término do intervalo de tempo do qual se deseja saber a composição da Mesa, no formato AAAA-MM-DD. | false    |
+
+```js
+DadosAbertos.legislaturaMesa({ id: 1 })
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err);
+```
 
 #### Partidos():
 

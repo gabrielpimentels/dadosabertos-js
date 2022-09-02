@@ -1,6 +1,7 @@
 "use strict";
 
 const axios = require("axios");
+const queryString = require("query-string");
 
 class DadosAbertos {
   constructor() {
@@ -12,22 +13,18 @@ class DadosAbertos {
       options.headers = { content_type: "application/json" };
 
       axios(options)
-        .then((data) => {
-          resolve(data.data);
-        })
-        .catch((err) => {
-          reject(err);
-        });
+        .then((data) => resolve(data.data))
+        .catch((err) => reject(err.response.data));
     });
   }
 
   _missing(param) {
-    return new Promise((_resolve, reject) => {
-      reject({
-        response: { data: `ERRO: Parâmetro não encontrado - ${param}` },
-      });
-    });
+    return new Promise((_resolve, reject) =>
+      reject(`ERRO: Parâmetro não encontrado - ${param}`)
+    );
   }
+
+  /* BLOCOS - BEGIN */
 
   blocos({
     id,
@@ -37,41 +34,35 @@ class DadosAbertos {
     ordem = "ASC",
     ordenarPor = "id",
   }) {
-    let query = "?";
+    const query = queryString.stringify({
+      id,
+      idLegislatura,
+      pagina,
+      itens,
+      ordem,
+      ordenarPor,
+    });
 
-    if (id)
-      id.forEach((blocoId, index) => {
-        query = query + `${index > 0 ? "&" : ""}id=${blocoId}`;
-      });
+    const path = `blocos${query ? `?${query}` : ""}`;
 
-    if (idLegislatura)
-      idLegislatura.forEach((legislaturaId) => {
-        query = query + `&idLegislatura=${legislaturaId}`;
-      });
-
-    if (pagina) query = query + `&pagina=${pagina}`;
-    if (itens) query = query + `&itens=${itens}`;
-    if (ordem) query = query + `&ordem=${ordem}`;
-    if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
-
-    const path = `blocos${query}`;
-    const options = {
+    return this._Send({
       url: `${this.apiUrl}/${path}`,
-    };
-
-    return this._Send(options);
+    });
   }
 
   blocosById(id) {
     if (!id) return this._missing("bloco ID");
 
     const path = `blocos`;
-    const options = {
-      url: `${this.apiUrl}/${path}/${id}`,
-    };
 
-    return this._Send(options);
+    return this._Send({
+      url: `${this.apiUrl}/${path}/${id}`,
+    });
   }
+
+  /* BLOCOS - END */
+
+  /* DEPUTADOS - BEGIN */
 
   deputados({
     id,
@@ -87,57 +78,36 @@ class DadosAbertos {
     ordem = "ASC",
     ordenarPor = "id",
   }) {
-    let query = "?";
+    const query = queryString.stringify({
+      id,
+      nome,
+      idLegislatura,
+      siglaUf,
+      siglaPartido,
+      siglaSexo,
+      dataInicio,
+      dataFim,
+      pagina,
+      itens,
+      ordem,
+      ordenarPor,
+    });
 
-    if (id)
-      id.forEach((id, index) => {
-        query = query + `${index > 0 ? "&" : ""}id=${id}`;
-      });
+    const path = `deputados${query ? `?${query}` : ""}`;
 
-    if (nome) query = query + `&nome=${nome}`;
-
-    if (idLegislatura)
-      idLegislatura.forEach((legislaturaId) => {
-        query = query + `&idLegislatura=${legislaturaId}`;
-      });
-
-    if (siglaUf)
-      siglaUf.forEach((sigla) => {
-        query = query + `&siglaUf=${sigla}`;
-      });
-
-    if (siglaPartido)
-      siglaPartido.forEach((partido) => {
-        query = query + `&siglaPartido=${partido}`;
-      });
-
-    if (siglaSexo) query = query + `&siglaSexo=${siglaSexo}`;
-
-    if (dataInicio) query = query + `dataInicio=${dataInicio}`;
-    if (dataFim) query = query + `&dataFim=${dataFim}`;
-
-    if (pagina) query = query + `&pagina=${pagina}`;
-    if (itens) query = query + `&itens=${itens}`;
-    if (ordem) query = query + `&ordem=${ordem}`;
-    if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
-
-    const path = `deputados${query}`;
-    const options = {
+    return this._Send({
       url: `${this.apiUrl}/${path}`,
-    };
-
-    return this._Send(options);
+    });
   }
 
   deputadoById(id) {
     if (!id) return this._missing("deputado ID");
 
     const path = `deputados/${id}`;
-    const options = {
-      url: `${this.apiUrl}/${path}`,
-    };
 
-    return this._Send(options);
+    return this._Send({
+      url: `${this.apiUrl}/${path}`,
+    });
   }
 
   deputadoDespesas({
@@ -153,36 +123,22 @@ class DadosAbertos {
   }) {
     if (!id) return this._missing("deputado ID");
 
-    let query = "?";
+    const query = queryString.stringify({
+      idLegislatura,
+      anos,
+      meses,
+      cnpjCpfFornecedor,
+      pagina,
+      itens,
+      ordem,
+      ordenarPor,
+    });
 
-    if (idLegislatura)
-      idLegislatura.forEach((legislaturaId, index) => {
-        query = query + `${index > 0 ? "&" : ""}idLegislatura=${legislaturaId}`;
-      });
+    const path = `deputados/${id}/despesas${query ? `?${query}` : ""}`;
 
-    if (anos)
-      anos.forEach((ano) => {
-        query = query + `&ano=${ano}`;
-      });
-
-    if (meses)
-      meses.forEach((mes) => {
-        query = query + `&mes=${mes}`;
-      });
-
-    if (cnpjCpfFornecedor)
-      query = query + `&cnpjCpfFornecedor=${cnpjCpfFornecedor}`;
-    if (pagina) query = query + `&pagina=${pagina}`;
-    if (itens) query = query + `&itens=${itens}`;
-    if (ordem) query = query + `&ordem=${ordem}`;
-    if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
-
-    const path = `deputados/${id}/despesas${query}`;
-    const options = {
+    return this._Send({
       url: `${this.apiUrl}/${path}`,
-    };
-
-    return this._Send(options);
+    });
   }
 
   deputadoDiscursos({
@@ -197,26 +153,21 @@ class DadosAbertos {
   }) {
     if (!id) return this._missing("deputado ID");
 
-    let query = "?";
+    const query = queryString.stringify({
+      idLegislatura,
+      dataInicio,
+      dataFim,
+      pagina,
+      itens,
+      ordem,
+      ordenarPor,
+    });
 
-    if (idLegislatura)
-      idLegislatura.forEach((legislaturaId) => {
-        query = query + `${index > 0 ? "&" : ""}idLegislatura=${legislaturaId}`;
-      });
+    const path = `deputados/${id}/discursos${query ? `?${query}` : ""}`;
 
-    if (dataInicio) query = query + `&dataInicio=${dataInicio}`;
-    if (dataFim) query = query + `&dataFim=${dataFim}`;
-    if (pagina) query = query + `&pagina=${pagina}`;
-    if (itens) query = query + `&itens=${itens}`;
-    if (ordem) query = query + `&ordem=${ordem}`;
-    if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
-
-    const path = `deputados/${id}/discursos${query}`;
-    const options = {
+    return this._Send({
       url: `${this.apiUrl}/${path}`,
-    };
-
-    return this._Send(options);
+    });
   }
 
   deputadoEventos({
@@ -230,43 +181,40 @@ class DadosAbertos {
   }) {
     if (!id) return this._missing("deputado ID");
 
-    let query = "?";
+    const query = queryString.stringify({
+      dataInicio,
+      dataFim,
+      pagina,
+      itens,
+      ordem,
+      ordenarPor,
+    });
 
-    if (dataInicio) query = query + `&dataInicio=${dataInicio}`;
-    if (dataFim) query = query + `&dataFim=${dataFim}`;
-    if (pagina) query = query + `&pagina=${pagina}`;
-    if (itens) query = query + `&itens=${itens}`;
-    if (ordem) query = query + `&ordem=${ordem}`;
-    if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
+    const path = `deputados/${id}/eventos${query ? `?${query}` : ""}`;
 
-    const path = `deputados/${id}/eventos${query}`;
-    const options = {
+    return this._Send({
       url: `${this.apiUrl}/${path}`,
-    };
-
-    return this._Send(options);
+    });
   }
 
   deputadoFrentes(id) {
     if (!id) return this._missing("deputado ID");
 
     const path = `deputados/${id}/frentes`;
-    const options = {
-      url: `${this.apiUrl}/${path}`,
-    };
 
-    return this._Send(options);
+    return this._Send({
+      url: `${this.apiUrl}/${path}`,
+    });
   }
 
   deputadoOcupacoes(id) {
     if (!id) return this._missing("deputado ID");
 
     const path = `deputados/${id}/ocupacoes`;
-    const options = {
-      url: `${this.apiUrl}/${path}`,
-    };
 
-    return this._Send(options);
+    return this._Send({
+      url: `${this.apiUrl}/${path}`,
+    });
   }
 
   deputadoOrgaos({
@@ -280,69 +228,98 @@ class DadosAbertos {
   }) {
     if (!id) return this._missing("deputado ID");
 
-    let query = "?";
+    const query = queryString.stringify({
+      dataInicio,
+      dataFim,
+      pagina,
+      itens,
+      ordem,
+      ordenarPor,
+    });
 
-    if (dataInicio) query = query + `&dataInicio=${dataInicio}`;
-    if (dataFim) query = query + `&dataFim=${dataFim}`;
-    if (pagina) query = query + `&pagina=${pagina}`;
-    if (itens) query = query + `&itens=${itens}`;
-    if (ordem) query = query + `&ordem=${ordem}`;
-    if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
+    const path = `deputados/${id}/orgaos${query ? `?${query}` : ""}`;
 
-    const path = `deputados/${id}/orgaos${query}`;
-    const options = {
+    return this._Send({
       url: `${this.apiUrl}/${path}`,
-    };
-
-    return this._Send(options);
+    });
   }
 
   deputadoProfissoes(id) {
     if (!id) return this._missing("deputado ID");
 
     const path = `deputados/${id}/profissoes`;
-    const options = {
+
+    return this._Send({
       url: `${this.apiUrl}/${path}`,
-    };
-
-    return this._Send(options);
-  }
-
-  legislaturasMesa({ id, dataInicio, dataFim }) {
-    if (!id) return this._missing("legislatura ID");
-
-    let query = "?";
-
-    if (dataInicio) query = query + `&dataInicio=${dataInicio}`;
-    if (dataFim) query = query + `&dataFim=${dataFim}`;
-
-    const path = `legislaturas/${id}/mesa${query}`;
-    const options = {
-      url: `${this.apiUrl}/${path}`,
-    };
-
-    console.log(options);
-
-    return this._Send(options);
+    });
   }
 
   refDeputadosCodSituacao() {
-    const path = "referencias/deputados/codSituacao";
-    const options = {
-      url: `${this.apiUrl}/${path}`,
-    };
-
-    return this._Send(options);
+    return this._Send({
+      url: `${this.apiUrl}/referencias/deputados/codSituacao`,
+    });
   }
 
   refDeputadosSituacao() {
-    const path = "referencias/situacoesDeputado";
-    const options = {
-      url: `${this.apiUrl}/${path}`,
-    };
-
-    return this._Send(options);
+    return this._Send({
+      url: `${this.apiUrl}/referencias/situacoesDeputado`,
+    });
   }
+
+  /* DEPUTADOS - END */
+
+  /* LEGISLATURA - BEGIN */
+
+  legislaturas({
+    id,
+    data,
+    pagina,
+    itens = 10,
+    ordem = "DESC",
+    ordenarPor = "id",
+  }) {
+    const query = queryString.stringify({
+      id,
+      data,
+      pagina,
+      itens,
+      ordem,
+      ordenarPor,
+    });
+
+    const path = `legislaturas${query ? `?${query}` : ""}`;
+
+    return this._Send({
+      url: `${this.apiUrl}/${path}`,
+    });
+  }
+
+  legislaturasById(id) {
+    if (!id) return this._missing("legislatura ID");
+
+    return this._Send({
+      url: `${this.apiUrl}/legislaturas/${id}`,
+    });
+  }
+
+  legislaturaMesa({ idLegislatura, dataInicio, dataFim }) {
+    if (!idLegislatura) return this._missing("legislatura ID");
+
+    const query = queryString.stringify({
+      dataInicio,
+      dataFim,
+    });
+
+    const path = `legislaturas/${idLegislatura}/mesa${
+      query ? `?${query}` : ""
+    }`;
+
+    return this._Send({
+      url: `${this.apiUrl}/${path}`,
+    });
+  }
+
+  /* LEGISLATURA - END */
 }
 
 module.exports = new DadosAbertos();
