@@ -1,0 +1,6 @@
+{
+  "watch": ["lib", "example.ts"],
+  "ext": ".ts",
+  "ignore": [],
+  "exec": "ts-node-dev example.ts"
+}

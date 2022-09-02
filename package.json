@@ -1,0 +1,32 @@
+{
+  "name": "dadosabertos-js",
+  "version": "0.0.1",
+  "description": "dadosabertos.camara.leg.br API wrapper",
+  "main": "./lib/index.js",
+  "scripts": {
+    "dev": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielpimentels/dadosabertos-js.git"
+  },
+  "keywords": [
+    "dadosabertos",
+    "API"
+  ],
+  "author": "Gabriel Pimentel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gabrielpimentels/dadosabertos-js/issues"
+  },
+  "homepage": "https://github.com/gabrielpimentels/dadosabertos-js#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.8.2"
+  }
+}
