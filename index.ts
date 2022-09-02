@@ -1,7 +1,7 @@
 "use strict";
 
 import axios from "axios";
-import { AxiosOptions, Blocos, BlocosById } from "types";
+import { AxiosOptions, Blocos, BlocosById, Deputados } from "./types";
 
 class DadosAbertos {
   apiUrl: string;
@@ -36,7 +36,7 @@ class DadosAbertos {
     id,
     idLegislatura,
     pagina,
-    itens,
+    itens = 10,
     ordem = "ASC",
     ordenarPor = "id",
   }: Blocos) {
@@ -58,7 +58,7 @@ class DadosAbertos {
     if (ordem) query = query + `&ordem=${ordem}`;
     if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
 
-    let options: AxiosOptions = {
+    const options: AxiosOptions = {
       url: `${this.apiUrl}/${path}?${query}`,
     };
 
@@ -70,8 +70,65 @@ class DadosAbertos {
 
     if (!id) return this._missing("bloco ID");
 
-    let options: AxiosOptions = {
+    const options: AxiosOptions = {
       url: `${this.apiUrl}/${path}/${id}`,
+    };
+
+    return this._Send(options);
+  }
+
+  deputados({
+    id,
+    nome,
+    idLegislatura,
+    siglaUf,
+    siglaPartido,
+    siglaSexo,
+    dataInicio,
+    dataFim,
+    pagina,
+    itens = 10,
+    ordem = "ASC",
+    ordenarPor = "id",
+  }: Deputados) {
+    let query = "?";
+
+    if (id)
+      id.forEach((id: any, index: any) => {
+        query = query + `${index > 0 ? "&" : ""}id=${id}`;
+      });
+
+    if (nome) query = query + `&nome=${nome}`;
+
+    if (idLegislatura)
+      idLegislatura.forEach((legislaturaId: any) => {
+        query = query + `&idLegislatura=${legislaturaId}`;
+      });
+
+    if (siglaUf)
+      siglaUf.forEach((sigla: any) => {
+        query = query + `&siglaUf=${sigla}`;
+      });
+
+    if (siglaPartido)
+      siglaPartido.forEach((partido: any) => {
+        query = query + `&siglaPartido=${partido}`;
+      });
+
+    if (siglaSexo) query = query + `&siglaSexo=${siglaSexo}`;
+
+    if (dataInicio) query = query + `dataInicio=${dataInicio}`;
+    if (dataFim) query = query + `&dataFim=${dataFim}`;
+
+    if (pagina) query = query + `&pagina=${pagina}`;
+    if (itens) query = query + `&itens=${itens}`;
+    if (ordem) query = query + `&ordem=${ordem}`;
+    if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
+
+    const path = `deputados${query}`;
+
+    const options: AxiosOptions = {
+      url: `${this.apiUrl}/${path}`,
     };
 
     return this._Send(options);

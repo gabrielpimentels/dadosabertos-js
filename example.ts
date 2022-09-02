@@ -1,7 +1,8 @@
-import DadosAbertos from "./lib";
+import dadosabertosJs from ".";
 
-DadosAbertos.blocosById({ id: 1 })
-  .then((_data) => console.log(_data))
-  .catch((_err) => {
-    console.log("err.response.data");
+dadosabertosJs
+  .deputados({ nome: "maria" })
+  .then((data) => console.log(data))
+  .catch((err) => {
+    console.log(err.response.data);
   });

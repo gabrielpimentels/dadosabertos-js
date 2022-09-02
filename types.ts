@@ -20,3 +20,15 @@ export interface Blocos extends QueryFilter {
 export interface BlocosById extends QueryFilter {
   id: number;
 }
+
+export interface Deputados extends QueryFilter {
+  id?: number[];
+  nome?: string;
+  idLegislatura?: number[];
+  siglaUf?: string[];
+  siglaPartido?: string[];
+  siglaSexo?: string;
+
+  dataInicio?: string;
+  dataFim?: string;
+}

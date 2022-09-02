@@ -9,7 +9,7 @@ npm install dadosabertos-js
 #### Setting Up
 
 ```js
-import DadosAbertos from "./lib";
+import DadosAbertos from "dadosabertos-js";
 ```
 
 Use:
@@ -22,7 +22,7 @@ DadosAbertos.blocos().then((data) => console.log(data));
 
 https://dadosabertos.camara.leg.br/
 
-##### blocos(id, idLegislatura, pagina, itens, ordem, ordenarPor):
+##### blocos({ id, idLegislatura, pagina, itens, ordem, ordenarPor }):
 
 | Argument      | Type       | Value                                                                                      | Required |
 | ------------- | ---------- | ------------------------------------------------------------------------------------------ | -------- |
@@ -39,9 +39,40 @@ DadosAbertos.blocos({ id: [1], idLegislatura: [1] })
   .catch(err) => console.log(err.response.data);
 ```
 
+##### blocosById({ id, pagina, itens, ordem, ordenarPor }):
+
+| Argument | Type | Value                                      | Required |
+| -------- | ---- | ------------------------------------------ | -------- |
+| id       | Int  | Número identificador do bloco de partidos. | true     |
+
+```js
+DadosAbertos.blocosById({ id: 1 })
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err.response.data);
+```
+
 #### deputados():
 
-> coming soon
+| Argument      | Type          | Value                                                                                                       | Required |
+| ------------- | ------------- | ----------------------------------------------------------------------------------------------------------- | -------- |
+| id            | array[Int]    | Número(s) identificador(es) de um deputado, separados por vírgulas.                                         | false    |
+| nome          | String        | Parte nome parlamentar.                                                                                     | false    |
+| idLegislatura | array[Int]    | Número(s) identificador(es) de uma ou mais legislatura(s), separados por vírgulas.                          | false    |
+| siglaUf       | array[String] | Uma ou mais sigla(s) de unidades federativas (estados e Distrito Federal).                                  | false    |
+| siglaPartido  | array[String] | Uma ou mais sigla(s) de partidos aos quais sejam filiados os deputados.                                     | false    |
+| siglaSexo     | String        | Letra que designe o gênero dos parlamentares que se deseja buscar, sendo M para masculino e F para feminino | false    |
+| dataInicio    | String        | Data de início de um intervalo de tempo, no formato AAAA-MM-DD.                                             | false    |
+| dataFim       | String        | Data de término de um intervalo de tempo, no formato AAAA-MM-DD.                                            | false    |
+| pagina        | Int           | Número da página de resultados. Default = 1                                                                 | false    |
+| itens         | Int           | Número máximo de itens na página que se deseja obter com esta requisição. Default = 10                      | false    |
+| ordem         | String        | O sentido da ordenação: asc para A a Z ou 0 a 9, e desc para Z a A ou 9 a 0. Default = ASC                  | false    |
+| ordenarPor    | String        | Nome do campo pelo qual a lista será ordenada: idLegislatura, id ou nome. Default = nome                    | false    |
+
+```js
+DadosAbertos.deputados({ nome: "maria" })
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err.response.data);
+```
 
 ### Async / Await
 

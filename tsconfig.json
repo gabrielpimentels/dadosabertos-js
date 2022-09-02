@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./lib",
+    "baseUrl": "./",
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -19,7 +19,7 @@
     "outDir": "./dist",
     "removeComments": true,
     "resolveJsonModule": true,
-    "rootDir": "./lib",
+    "rootDir": "./",
     "skipLibCheck": true,
     "sourceMap": true,
     "strictPropertyInitialization": false,
@@ -28,5 +28,5 @@
     "target": "es6"
   },
   "exclude": ["node_modules"],
-  "include": ["./lib/**/*.ts"]
+  "include": ["./**/*.ts"]
 }
