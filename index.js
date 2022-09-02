@@ -132,6 +132,18 @@ class DadosAbertos {
 
     return this._Send(options);
   }
+
+  deputadoById(id) {
+    if (!id) return this._missing("deputado ID");
+
+    const path = `deputados/${id}`;
+
+    const options = {
+      url: `${this.apiUrl}/${path}`,
+    };
+
+    return this._Send(options);
+  }
 }
 
 module.exports = new DadosAbertos();

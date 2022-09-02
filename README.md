@@ -51,7 +51,7 @@ DadosAbertos.blocosById({ id: 1 })
   .catch(err) => console.log(err.response.data);
 ```
 
-#### deputados():
+#### deputados({ id, nome, idLegislatura, siglaUf, siglaPartido, siglaSexo, dataInicio, dataFim, pagina, itens, ordem, ordenarPor }):
 
 | Argument      | Type          | Value                                                                                                       | Required |
 | ------------- | ------------- | ----------------------------------------------------------------------------------------------------------- | -------- |
@@ -70,6 +70,18 @@ DadosAbertos.blocosById({ id: 1 })
 
 ```js
 DadosAbertos.deputados({ nome: "maria" })
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err.response.data);
+```
+
+#### deputadosById(id):
+
+| Argument | Type | Value                                | Required |
+| -------- | ---- | ------------------------------------ | -------- |
+| id       | Int  | Número identificador de um deputado. | true     |
+
+```js
+DadosAbertos.deputadosById(1)
   .then((data) => console.log(data))
   .catch(err) => console.log(err.response.data);
 ```
