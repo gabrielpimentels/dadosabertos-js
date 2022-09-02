@@ -9,7 +9,7 @@ npm install dadosabertos-js
 #### Setting Up
 
 ```js
-import DadosAbertos from "dadosabertos-js";
+const dadosabertos = require("dadosabertos-js");
 ```
 
 Use:

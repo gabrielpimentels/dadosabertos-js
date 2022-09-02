@@ -1,16 +1,15 @@
 "use strict";
 
-import axios from "axios";
-import { AxiosOptions, Blocos, BlocosById, Deputados } from "./types";
+const axios = require("axios");
 
 class DadosAbertos {
-  apiUrl: string;
+  apiUrl;
 
   constructor() {
     this.apiUrl = "https://dadosabertos.camara.leg.br/api/v2";
   }
 
-  _Send(options: AxiosOptions) {
+  _Send(options) {
     return new Promise((resolve, reject) => {
       options.headers = { content_type: "application/json" };
 
@@ -24,7 +23,7 @@ class DadosAbertos {
     });
   }
 
-  _missing(param: string) {
+  _missing(param) {
     return new Promise((_resolve, reject) => {
       reject({
         response: { data: `ERRO: Parâmetro não encontrado - ${param}` },
@@ -39,17 +38,17 @@ class DadosAbertos {
     itens = 10,
     ordem = "ASC",
     ordenarPor = "id",
-  }: Blocos) {
+  }) {
     const path = "blocos";
     let query = "";
 
     if (id)
-      id.forEach((blocoId: any, index: any) => {
+      id.forEach((blocoId, index) => {
         query = query + `${index > 0 ? "&" : ""}id=${blocoId}`;
       });
 
     if (idLegislatura)
-      idLegislatura.forEach((legislaturaId: any) => {
+      idLegislatura.forEach((legislaturaId) => {
         query = query + `&idLegislatura=${legislaturaId}`;
       });
 
@@ -58,19 +57,19 @@ class DadosAbertos {
     if (ordem) query = query + `&ordem=${ordem}`;
     if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
 
-    const options: AxiosOptions = {
+    const options = {
       url: `${this.apiUrl}/${path}?${query}`,
     };
 
     return this._Send(options);
   }
 
-  blocosById({ id }: BlocosById) {
+  blocosById({ id }) {
     const path = "blocos";
 
     if (!id) return this._missing("bloco ID");
 
-    const options: AxiosOptions = {
+    const options = {
       url: `${this.apiUrl}/${path}/${id}`,
     };
 
@@ -90,28 +89,28 @@ class DadosAbertos {
     itens = 10,
     ordem = "ASC",
     ordenarPor = "id",
-  }: Deputados) {
+  }) {
     let query = "?";
 
     if (id)
-      id.forEach((id: any, index: any) => {
+      id.forEach((id, index) => {
         query = query + `${index > 0 ? "&" : ""}id=${id}`;
       });
 
     if (nome) query = query + `&nome=${nome}`;
 
     if (idLegislatura)
-      idLegislatura.forEach((legislaturaId: any) => {
+      idLegislatura.forEach((legislaturaId) => {
         query = query + `&idLegislatura=${legislaturaId}`;
       });
 
     if (siglaUf)
-      siglaUf.forEach((sigla: any) => {
+      siglaUf.forEach((sigla) => {
         query = query + `&siglaUf=${sigla}`;
       });
 
     if (siglaPartido)
-      siglaPartido.forEach((partido: any) => {
+      siglaPartido.forEach((partido) => {
         query = query + `&siglaPartido=${partido}`;
       });
 
@@ -127,7 +126,7 @@ class DadosAbertos {
 
     const path = `deputados${query}`;
 
-    const options: AxiosOptions = {
+    const options = {
       url: `${this.apiUrl}/${path}`,
     };
 
@@ -135,4 +134,4 @@ class DadosAbertos {
   }
 }
 
-export default new DadosAbertos();
+module.exports = new DadosAbertos();

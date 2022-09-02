@@ -1,6 +1,0 @@
-{
-  "watch": ["example.ts", "index.ts", "types.ts"],
-  "ext": ".ts",
-  "ignore": [],
-  "exec": "ts-node-dev example.ts"
-}

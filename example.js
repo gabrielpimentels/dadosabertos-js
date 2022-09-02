@@ -1,6 +1,6 @@
-import dadosabertosJs from ".";
+const dadosabertos = require(".");
 
-dadosabertosJs
+dadosabertos
   .deputados({ nome: "maria" })
   .then((data) => console.log(data))
   .catch((err) => {
