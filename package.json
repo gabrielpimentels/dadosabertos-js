@@ -1,6 +1,6 @@
 {
   "name": "dadosabertos-js",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "dadosabertos.camara.leg.br API wrapper",
   "main": "index.js",
   "scripts": {
