@@ -3,8 +3,6 @@
 const axios = require("axios");
 
 class DadosAbertos {
-  apiUrl;
-
   constructor() {
     this.apiUrl = "https://dadosabertos.camara.leg.br/api/v2";
   }
@@ -39,8 +37,7 @@ class DadosAbertos {
     ordem = "ASC",
     ordenarPor = "id",
   }) {
-    const path = "blocos";
-    let query = "";
+    let query = "?";
 
     if (id)
       id.forEach((blocoId, index) => {
@@ -57,18 +54,18 @@ class DadosAbertos {
     if (ordem) query = query + `&ordem=${ordem}`;
     if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
 
+    const path = `blocos${query}`;
     const options = {
-      url: `${this.apiUrl}/${path}?${query}`,
+      url: `${this.apiUrl}/${path}`,
     };
 
     return this._Send(options);
   }
 
   blocosById({ id }) {
-    const path = "blocos";
-
     if (!id) return this._missing("bloco ID");
 
+    const path = `blocos`;
     const options = {
       url: `${this.apiUrl}/${path}/${id}`,
     };
@@ -125,7 +122,6 @@ class DadosAbertos {
     if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
 
     const path = `deputados${query}`;
-
     const options = {
       url: `${this.apiUrl}/${path}`,
     };
@@ -137,7 +133,85 @@ class DadosAbertos {
     if (!id) return this._missing("deputado ID");
 
     const path = `deputados/${id}`;
+    const options = {
+      url: `${this.apiUrl}/${path}`,
+    };
 
+    return this._Send(options);
+  }
+
+  deputadoDespesas({
+    id,
+    idLegislatura,
+    anos,
+    meses,
+    cnpjCpfFornecedor,
+    pagina,
+    itens = 10,
+    ordem = "ASC",
+    ordenarPor = "ano",
+  }) {
+    if (!id) return this._missing("deputado ID");
+
+    let query = "?";
+
+    if (idLegislatura)
+      idLegislatura.forEach((legislaturaId, index) => {
+        query = query + `${index > 0 ? "&" : ""}idLegislatura=${legislaturaId}`;
+      });
+
+    if (anos)
+      anos.forEach((ano) => {
+        query = query + `&ano=${ano}`;
+      });
+
+    if (meses)
+      meses.forEach((mes) => {
+        query = query + `&mes=${mes}`;
+      });
+
+    if (cnpjCpfFornecedor)
+      query = query + `&cnpjCpfFornecedor=${cnpjCpfFornecedor}`;
+    if (pagina) query = query + `&pagina=${pagina}`;
+    if (itens) query = query + `&itens=${itens}`;
+    if (ordem) query = query + `&ordem=${ordem}`;
+    if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
+
+    const path = `deputados/${id}/despesas${query}`;
+    const options = {
+      url: `${this.apiUrl}/${path}`,
+    };
+
+    return this._Send(options);
+  }
+
+  deputadoDiscursos({
+    id,
+    idLegislatura,
+    dataInicio,
+    dataFim,
+    pagina,
+    itens = 10,
+    ordem = "ASC",
+    ordenarPor = "dataHoraInicio",
+  }) {
+    if (!id) return this._missing("deputado ID");
+
+    let query = "?";
+
+    if (idLegislatura)
+      idLegislatura.forEach((legislaturaId) => {
+        query = query + `idLegislatura=${legislaturaId}`;
+      });
+
+    if (dataInicio) query = query + `&dataInicio=${dataInicio}`;
+    if (dataFim) query = query + `&dataFim=${dataFim}`;
+    if (pagina) query = query + `&pagina=${pagina}`;
+    if (itens) query = query + `&itens=${itens}`;
+    if (ordem) query = query + `&ordem=${ordem}`;
+    if (ordenarPor) query = query + `&ordenarPor=${ordenarPor}`;
+
+    const path = `deputados/${id}/discursos${query}`;
     const options = {
       url: `${this.apiUrl}/${path}`,
     };

@@ -66,7 +66,7 @@ DadosAbertos.blocosById({ id: 1 })
 | pagina        | Int           | Número da página de resultados. Default = 1                                                                 | false    |
 | itens         | Int           | Número máximo de itens na página que se deseja obter com esta requisição. Default = 10                      | false    |
 | ordem         | String        | O sentido da ordenação: asc para A a Z ou 0 a 9, e desc para Z a A ou 9 a 0. Default = ASC                  | false    |
-| ordenarPor    | String        | Nome do campo pelo qual a lista será ordenada: idLegislatura, id ou nome. Default = nome                    | false    |
+| ordenarPor    | String        | Nome do campo pelo qual a lista será ordenada: idLegislatura, id ou nome. Default = id                      | false    |
 
 ```js
 DadosAbertos.deputados({ nome: "maria" })
@@ -82,6 +82,45 @@ DadosAbertos.deputados({ nome: "maria" })
 
 ```js
 DadosAbertos.deputadosById(1)
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err.response.data);
+```
+
+#### deputadoDespesas({ id, idLegislatura, anos, meses, cnpjCpfFornecedor, pagina, itens, ordem, ordenarPor }):
+
+| Argument          | Type       | Value                                                                                                        | Required |
+| ----------------- | ---------- | ------------------------------------------------------------------------------------------------------------ | -------- |
+| id                | Int        | O identificador numérico do parlamentar.                                                                     | true     |
+| idLegislatura     | array[Int] | Número(s) identificador(es) de uma ou mais legislatura(s), separados por vírgulas.                           | false    |
+| anos              | array[Int] | Um ou mais ano(s) de ocorrência das despesas.                                                                | false    |
+| meses             | array[Int] | Um ou mais número(s) do(s) mês(es) de ocorrência das despesas.                                               | false    |
+| cnpjCpfFornecedor | String     | CNPJ de uma pessoa jurídica, ou CPF de uma pessoa física, fornecedora do produto ou serviço (apenas números) | false    |
+| pagina            | Int        | Número da página de resultados. Default = 1                                                                  | false    |
+| itens             | Int        | Número máximo de itens na página que se deseja obter com esta requisição. Default = 10                       | false    |
+| ordem             | String     | O sentido da ordenação: asc para A a Z ou 0 a 9, e desc para Z a A ou 9 a 0. Default = ASC                   | false    |
+| ordenarPor        | String     | Nome do campo pelo qual a lista será ordenada: idLegislatura, id ou nome. Default = ano                      | false    |
+
+```js
+DadosAbertos.deputadoDespesas({ id: 1 })
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err.response.data);
+```
+
+#### deputadoDiscursos({ id, idLegislatura, dataInicio, dataFim, pagina, itens, ordem, ordenarPor }):
+
+| Argument      | Type       | Value                                                                                              | Required |
+| ------------- | ---------- | -------------------------------------------------------------------------------------------------- | -------- |
+| id            | Int        | O identificador numérico do parlamentar.                                                           | true     |
+| idLegislatura | array[Int] | Número(s) identificador(es) de uma ou mais legislatura(s), separados por vírgulas.                 | false    |
+| dataInicio    | String     | Data de início de um intervalo de tempo, no formato AAAA-MM-DD.                                    | false    |
+| dataFim       | String     | Data de término de um intervalo de tempo, no formato AAAA-MM-DD.                                   | false    |
+| pagina        | Int        | Número da página de resultados. Default = 1                                                        | false    |
+| itens         | Int        | Número máximo de itens na página que se deseja obter com esta requisição. Default = 10             | false    |
+| ordem         | String     | O sentido da ordenação: asc para A a Z ou 0 a 9, e desc para Z a A ou 9 a 0. Default = ASC         | false    |
+| ordenarPor    | String     | Nome do campo pelo qual a lista será ordenada: idLegislatura, id ou nome. Default = dataHoraInicio | false    |
+
+```js
+DadosAbertos.deputadoDespesas({ id: 1 })
   .then((data) => console.log(data))
   .catch(err) => console.log(err.response.data);
 ```
