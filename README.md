@@ -20,7 +20,7 @@ DadosAbertos.blocos().then((data) => console.log(data));
 
 #### Data API
 
-https://dadosabertos.camara.leg.br/
+https://dadosabertos.camara.leg.br/ API wrapper
 
 ##### blocos({ id, idLegislatura, pagina, itens, ordem, ordenarPor }): Lista de dados sobre os blocos partidários
 
@@ -233,6 +233,38 @@ DadosAbertos.refDeputadosSituacao()
   .catch(err) => console.log(err.response.data);
 ```
 
+#### Eventos():
+
+> coming soon
+
+#### Frentes():
+
+> coming soon
+
+#### Legislaturas():
+
+> coming soon
+
+#### Partidos():
+
+> coming soon
+
+#### Proposicoes():
+
+> coming soon
+
+#### Referencias():
+
+> coming soon
+
+#### Votacoes():
+
+> coming soon
+
+#### Orgaos():
+
+> coming soon
+
 ### Async / Await
 
 Example usando Async & Await com express.js:
@@ -241,7 +273,7 @@ Example usando Async & Await com express.js:
 app.post("/dadosabertos/blocos", async (req, res) => {
   const { id, idLegislatura } = req.body;
 
-  let blocos = await da.blocos({ id, idLegislatura });
+  let blocos = await DadosAbertos.blocos({ id, idLegislatura });
 
   if (!blocos) return res.status(400).send("Nenhum bloco encontrado!");
   res.status(200).json(blocos);
