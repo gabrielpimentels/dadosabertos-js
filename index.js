@@ -320,6 +320,60 @@ class DadosAbertos {
   }
 
   /* LEGISLATURA - END */
+
+  /* VOTACOES - BEGIN */
+
+  votacoes({
+    id,
+    idProposicao,
+    idEvento,
+    idOrgao,
+    dataInicio,
+    dataFim,
+    pagina = 1,
+    itens = 10,
+    ordem = "ASC",
+    ordenarPor = "id",
+  }) {
+    const query = queryString.stringify({
+      id,
+      idProposicao,
+      idEvento,
+      idOrgao,
+      dataInicio,
+      dataFim,
+      pagina,
+      itens,
+      ordem,
+      ordenarPor,
+    });
+
+    const path = `votacoes${query ? `?${query}` : ""}`;
+
+    return this._Send({
+      url: `${this.apiUrl}/${path}`,
+    });
+  }
+
+  votacoesById(id) {
+    return this._Send({
+      url: `${this.apiUrl}/votacoes/${id}`,
+    });
+  }
+
+  orientacoes(id) {
+    return this._Send({
+      url: `${this.apiUrl}/votacoes/${id}/orientacoes`,
+    });
+  }
+
+  votos(id) {
+    return this._Send({
+      url: `${this.apiUrl}/votacoes/${id}/votos`,
+    });
+  }
+
+  /* VOTACOES - END */
 }
 
 module.exports = new DadosAbertos();

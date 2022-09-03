@@ -283,9 +283,62 @@ DadosAbertos.legislaturaMesa({ id: 1 })
 
 > coming soon
 
-#### Votacoes():
+#### votacoes({ id, idProposicao, idEvento, idOrgao, dataInicio, dataFim, pagina, itens, ordem, ordenarPor }): Lista das votações da Câmara
 
-> coming soon
+| Argument     | Type          | Value                                                                                                                 | Required |
+| ------------ | ------------- | --------------------------------------------------------------------------------------------------------------------- | -------- |
+| id           | array[String] | Um ou mais identificador(es) alfanuméricos de votação.                                                                | false    |
+| idProposicao | array[Int]    | Um ou mais identificador(es) numéricos de proposições.                                                                | false    |
+| idEvento     | array[Int]    | Identificador de um ou mais evento(s) realizado(s) na Câmara.                                                         | false    |
+| idOrgao      | array[Int]    | Um ou mais identificador(es) numéricos de órgãos da Câmara.                                                           | false    |
+| dataInicio   | String        | Data em formato AAAA-MM-DD para início do intervalo no qual tenham sido realizadas as votações a serem listadas.      | false    |
+| dataFim      | String        | Data em formato AAAA-MM-DD que define o fim do intervalo no qual tenham sido realizadas as votações a serem listadas. | false    |
+| pagina       | Int           | Número da página de resultados. Default = 1                                                                           | false    |
+| itens        | Int           | Número máximo de itens na página que se deseja obter com esta requisição. Default = 10                                | false    |
+| ordem        | String        | O sentido da ordenação: asc para A a Z ou 0 a 9, e desc para Z a A ou 9 a 0. Default = DESC                           | false    |
+| ordenarPor   | String        | Nome do campo pelo qual a lista será ordenada: idLegislatura, id ou nome. Default = id                                | false    |
+
+```js
+DadosAbertos.legislaturas({ data: "2018-01-01" })
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err);
+```
+
+#### votacoesById(id): Informações detalhadas sobre uma votação da Câmara
+
+| Argument | Type | Value                                 | Required |
+| -------- | ---- | ------------------------------------- | -------- |
+| id       | Int  | Identificador alfanumérico da votação | true     |
+
+```js
+DadosAbertos.votacoesById(1)
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err);
+```
+
+#### orientacoes(id): O voto recomendado pelas lideranças aos seus deputados em uma votação.
+
+| Argument | Type | Value                                  | Required |
+| -------- | ---- | -------------------------------------- | -------- |
+| id       | Int  | Identificador alfanumérico da votação. | true     |
+
+```js
+DadosAbertos.orientacoes(1)
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err);
+```
+
+#### votos(id): Como cada parlamentar votou em uma votação nominal e aberta
+
+| Argument | Type | Value                                  | Required |
+| -------- | ---- | -------------------------------------- | -------- |
+| id       | Int  | Identificador alfanumérico da votação. | true     |
+
+```js
+DadosAbertos.votos(1)
+  .then((data) => console.log(data))
+  .catch(err) => console.log(err);
+```
 
 #### Orgaos():
 
